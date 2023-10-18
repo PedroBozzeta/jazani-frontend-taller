@@ -4,7 +4,8 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { type LoginRequest, UserSecurityResponse } from '@/auth/login/domain';
+import { type LoginRequest, type UserSecurityResponse } from '@/auth/login/domain';
+import useLogin from '@/auth/login/application/hooks/useLogin';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 const index = (): JSX.Element => {
@@ -19,8 +20,19 @@ const index = (): JSX.Element => {
 		}),
 		onSubmit: (values: LoginRequest) => {
 			console.log('value:', values);
+			void loginAuth(values);
 		},
 	});
+
+	// React Query
+
+	const { mutateAsync, isSuccess, isError } = useLogin();
+
+	// Methods
+	const loginAuth = async (payload: LoginRequest): Promise<void> => {
+		const response: UserSecurityResponse = await mutateAsync(payload);
+		console.log('login:', response);
+	};
 	return (
 		<Row className="justify-content-center align-items-center vh-100">
 			<Col xs={12} sm={8} md={7} lg={6} xl={5} xxl={4}>
