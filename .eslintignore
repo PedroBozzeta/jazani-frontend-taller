@@ -3,10 +3,11 @@ node_modules
 package.json
 tsconfig.json
 tsconfig.node.json
-vite.config.json
+vite.config.ts
+.eslintrc.cjs
 yarn.lock
 .DS_Store
+*d.ts
 public
-.eslintrc.cjs
 index.html
 README.md
