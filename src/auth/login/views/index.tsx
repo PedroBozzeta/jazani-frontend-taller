@@ -8,6 +8,7 @@ import { type LoginRequest, type UserSecurityResponse } from '@/auth/login/domai
 import useLogin from '@/auth/login/application/hooks/useLogin';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { LocalStorageSession } from '@/core/sessions';
 const index = (): JSX.Element => {
 	const formik = useFormik<LoginRequest>({
 		initialValues: {
@@ -32,6 +33,7 @@ const index = (): JSX.Element => {
 	const loginAuth = async (payload: LoginRequest): Promise<void> => {
 		const response: UserSecurityResponse = await mutateAsync(payload);
 		console.log('login:', response);
+		LocalStorageSession.saveAuthorization(response);
 	};
 	return (
 		<Row className="justify-content-center align-items-center vh-100">
