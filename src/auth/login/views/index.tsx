@@ -9,7 +9,9 @@ import useLogin from '@/auth/login/application/hooks/useLogin';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LocalStorageSession } from '@/core/sessions';
+import { useNavigate } from 'react-router';
 const index = (): JSX.Element => {
+	const navigate = useNavigate();
 	const formik = useFormik<LoginRequest>({
 		initialValues: {
 			email: '',
@@ -34,6 +36,7 @@ const index = (): JSX.Element => {
 		const response: UserSecurityResponse = await mutateAsync(payload);
 		console.log('login:', response);
 		LocalStorageSession.saveAuthorization(response);
+		navigate('/');
 	};
 	return (
 		<Row className="justify-content-center align-items-center vh-100">
